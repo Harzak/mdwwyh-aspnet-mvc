@@ -13,11 +13,6 @@ namespace Clean.Controllers
     {
         private readonly IAuthenticationService _authenticationService;
 
-        public AccountController()
-            : this(new InMemoryAuthenticationService())
-        {
-        }
-
         public AccountController(IAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService ?? throw new ArgumentNullException(nameof(authenticationService));

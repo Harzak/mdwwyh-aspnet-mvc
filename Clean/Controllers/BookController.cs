@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Clean.Models;
-using Common.Repository;
 using Clean.Services;
-using Common.Database;
 
 namespace Clean.Controllers
 {
@@ -12,11 +10,6 @@ namespace Clean.Controllers
     public sealed class BookController : Controller
     {
         private readonly IBookService _bookService;
-
-        public BookController()
-            : this(new BookService(new BookRepository(new LibraryDbContext())))
-        {
-        }
 
         public BookController(IBookService bookService)
         {
@@ -131,16 +124,6 @@ namespace Clean.Controllers
         {
             _bookService.DeleteBook(id);
             return this.Json(new { success = true });
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-            {
-                _bookService.Dispose();
-            }
-
-            base.Dispose(disposing);
         }
     }
 }
