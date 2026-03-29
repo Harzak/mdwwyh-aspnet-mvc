@@ -1,0 +1,25 @@
+@model Clean.Models.LibrarySummaryViewModel
+
+<div class="library-summary">
+    <h2 class="library-summary-title">Library Overview</h2>
+    <p class="library-summary-hint">Select a book from the list to view its details, or click <strong>Add</strong> to create a new one.</p>
+
+    <div class="library-summary-stats">
+        <div class="library-summary-stat">
+            <span class="library-summary-value">@Model.TotalBooks</span>
+            <span class="library-summary-label">Books</span>
+        </div>
+        <div class="library-summary-stat">
+            <span class="library-summary-value">@Model.TotalLibraries</span>
+            <span class="library-summary-label">Libraries</span>
+        </div>
+        <div class="library-summary-stat">
+            <span class="library-summary-value">@Model.TotalAuthors</span>
+            <span class="library-summary-label">Authors</span>
+        </div>
+        <div class="library-summary-stat">
+            <span class="library-summary-value">@Model.TotalGenres</span>
+            <span class="library-summary-label">Genres</span>
+        </div>
+    </div>
+</div>

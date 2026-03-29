@@ -7,5 +7,8 @@ namespace Clean.Constants
 
         internal const string HomeAction = "Index";
         internal const string HomeController = "Home";
+
+        internal const string BookAction = "Index";
+        internal const string BookController = "Book";
     }
 }

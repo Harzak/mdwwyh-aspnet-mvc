@@ -1,0 +1,322 @@
+/* ========================================
+   Book Page - Split Panel Layout
+   ======================================== */
+
+.book-page {
+    display: flex;
+    height: calc(100vh - 70px);
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 15px;
+}
+
+/* ========================================
+   Sidebar (Left Panel)
+   ======================================== */
+
+.book-sidebar {
+    width: 340px;
+    min-width: 340px;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    background-color: #fafafa;
+}
+
+.book-sidebar-header {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+    gap: 8px;
+    background-color: #fff;
+}
+
+.book-search-input {
+    flex: 1;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+.book-search-input:focus {
+    border-color: #337ab7;
+}
+
+.book-add-button {
+    padding: 6px 14px;
+    font-size: 14px;
+    color: #fff;
+    background-color: #337ab7;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.book-add-button:hover {
+    background-color: #286090;
+}
+
+/* ========================================
+   Book List
+   ======================================== */
+
+.book-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    flex: 1;
+}
+
+.book-list-item {
+    padding: 10px 14px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    transition: background-color 0.15s;
+}
+
+.book-list-item:hover {
+    background-color: #eef4fb;
+}
+
+.book-list-item.active {
+    background-color: #d9eaf7;
+    border-left: 3px solid #337ab7;
+}
+
+.book-list-title {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-list-author {
+    display: block;
+    font-size: 12px;
+    color: #777;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.book-list-empty {
+    padding: 20px 14px;
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+}
+
+/* ========================================
+   Content Panel (Right)
+   ======================================== */
+
+.book-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 24px 32px;
+    background-color: #fff;
+}
+
+/* ========================================
+   Book Detail
+   ======================================== */
+
+.book-detail-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.book-detail-title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+}
+
+.book-detail-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.book-detail-fields {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 8px 16px;
+    font-size: 14px;
+}
+
+.book-detail-fields dt {
+    font-weight: 600;
+    color: #555;
+}
+
+.book-detail-fields dd {
+    margin: 0;
+    color: #333;
+}
+
+/* ========================================
+   Buttons
+   ======================================== */
+
+.book-btn {
+    padding: 6px 16px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+}
+
+.book-btn:hover {
+    background-color: #f5f5f5;
+}
+
+.book-btn-save {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #337ab7;
+}
+
+.book-btn-save:hover {
+    background-color: #286090;
+}
+
+.book-btn-delete {
+    color: #fff;
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.book-btn-delete:hover {
+    background-color: #c9302c;
+}
+
+.book-btn-edit {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+}
+
+.book-btn-edit:hover {
+    background-color: #449d44;
+}
+
+.book-btn-cancel {
+    color: #555;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+/* ========================================
+   Book Form
+   ======================================== */
+
+.book-form-container {
+    max-width: 500px;
+}
+
+.book-form-title {
+    margin: 0 0 20px 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+}
+
+.book-form-field {
+    margin-bottom: 14px;
+}
+
+.book-form-field label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 4px;
+}
+
+.book-form-input {
+    width: 100%;
+    padding: 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.book-form-input:focus {
+    border-color: #337ab7;
+}
+
+.book-form-error {
+    display: block;
+    font-size: 12px;
+    color: #d9534f;
+    margin-top: 4px;
+}
+
+.book-form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 20px;
+}
+
+/* ========================================
+   Library Summary
+   ======================================== */
+
+.library-summary {
+    text-align: center;
+    padding-top: 40px;
+}
+
+.library-summary-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.library-summary-hint {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 32px;
+}
+
+.library-summary-stats {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.library-summary-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.library-summary-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #337ab7;
+}
+
+.library-summary-label {
+    font-size: 14px;
+    color: #777;
+    margin-top: 4px;
+}

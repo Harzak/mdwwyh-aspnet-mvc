@@ -1,0 +1,28 @@
+@model Clean.Models.BookDetailViewModel
+
+<div class="book-detail">
+    <div class="book-detail-header">
+        <h2 class="book-detail-title">@Model.Title</h2>
+        <div class="book-detail-actions">
+            <button type="button" class="book-btn book-btn-edit" data-book-id="@Model.Id">Edit</button>
+            <button type="button" class="book-btn book-btn-delete" data-book-id="@Model.Id">Delete</button>
+        </div>
+    </div>
+
+    <dl class="book-detail-fields">
+        <dt>Author</dt>
+        <dd>@Model.Author</dd>
+
+        <dt>ISBN</dt>
+        <dd>@(string.IsNullOrEmpty(Model.Isbn) ? "—" : Model.Isbn)</dd>
+
+        <dt>Genre</dt>
+        <dd>@(string.IsNullOrEmpty(Model.Genre) ? "—" : Model.Genre)</dd>
+
+        <dt>Published Year</dt>
+        <dd>@(Model.PublishedYear.HasValue ? Model.PublishedYear.Value.ToString() : "—")</dd>
+
+        <dt>Library</dt>
+        <dd>@(string.IsNullOrEmpty(Model.LibraryName) ? "—" : Model.LibraryName)</dd>
+    </dl>
+</div>

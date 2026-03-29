@@ -21,6 +21,9 @@ namespace Clean.App_Start
 
             bundles.Add(new StyleBundle("~/Content/login").Include(
                 "~/Content/login.css"));
+
+            bundles.Add(new StyleBundle("~/Content/book").Include(
+                "~/Content/book.css"));
         }
     }
 }

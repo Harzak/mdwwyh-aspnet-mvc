@@ -1,0 +1,61 @@
+@model Clean.Models.BookFormViewModel
+
+@{
+    bool isEdit = Model.Id > 0;
+    string formAction = isEdit ? Url.Action("Edit", "Book") : Url.Action("Create", "Book");
+    string formTitle = isEdit ? "Edit Book" : "New Book";
+}
+
+<div class="book-form-container">
+    <h2 class="book-form-title">@formTitle</h2>
+
+    @using (Html.BeginForm(isEdit ? "Edit" : "Create", "Book", FormMethod.Post, new { id = "bookForm", @class = "book-form" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Id)
+
+        <div class="book-form-field">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "book-form-input" })
+            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "book-form-error" })
+        </div>
+
+        <div class="book-form-field">
+            @Html.LabelFor(m => m.Author)
+            @Html.TextBoxFor(m => m.Author, new { @class = "book-form-input" })
+            @Html.ValidationMessageFor(m => m.Author, "", new { @class = "book-form-error" })
+        </div>
+
+        <div class="book-form-field">
+            @Html.LabelFor(m => m.Isbn)
+            @Html.TextBoxFor(m => m.Isbn, new { @class = "book-form-input" })
+            @Html.ValidationMessageFor(m => m.Isbn, "", new { @class = "book-form-error" })
+        </div>
+
+        <div class="book-form-field">
+            @Html.LabelFor(m => m.Genre)
+            @Html.TextBoxFor(m => m.Genre, new { @class = "book-form-input" })
+            @Html.ValidationMessageFor(m => m.Genre, "", new { @class = "book-form-error" })
+        </div>
+
+        <div class="book-form-field">
+            @Html.LabelFor(m => m.PublishedYear)
+            @Html.TextBoxFor(m => m.PublishedYear, new { @class = "book-form-input", type = "number" })
+            @Html.ValidationMessageFor(m => m.PublishedYear, "", new { @class = "book-form-error" })
+        </div>
+
+        <div class="book-form-field">
+            @Html.LabelFor(m => m.LibraryId)
+            @Html.DropDownListFor(m => m.LibraryId,
+                new SelectList(Model.AvailableLibraries, "Id", "Name"),
+                "— Select a library —",
+                new { @class = "book-form-input" })
+            @Html.ValidationMessageFor(m => m.LibraryId, "", new { @class = "book-form-error" })
+        </div>
+
+        <div class="book-form-actions">
+            <button type="submit" class="book-btn book-btn-save">Save</button>
+            <button type="button" class="book-btn book-btn-cancel" id="bookFormCancel">Cancel</button>
+        </div>
+    }
+</div>

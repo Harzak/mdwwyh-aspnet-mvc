@@ -1,0 +1,27 @@
+@model Clean.Models.BookIndexViewModel
+@{
+    ViewBag.Title = "Books";
+}
+
+@section styles {
+    @Styles.Render("~/Content/book")
+}
+
+<div class="book-page">
+    <div class="book-sidebar">
+        <div class="book-sidebar-header">
+            <input type="text" id="bookSearchInput" class="book-search-input" placeholder="Search books..." />
+            <button type="button" id="bookAddButton" class="book-add-button">Add</button>
+        </div>
+        <div id="bookListContainer">
+            @Html.Partial("_BookList", Model.Books)
+        </div>
+    </div>
+    <div class="book-content" id="bookContentPanel">
+        @Html.Partial("_LibrarySummary", Model.Summary)
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/Scripts/book.js"></script>
+}

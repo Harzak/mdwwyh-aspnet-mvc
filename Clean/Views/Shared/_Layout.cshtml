@@ -15,6 +15,7 @@
             @Html.ActionLink("Clean", "Index", "Home", new { area = "" }, new { @class = "app-navbar-brand" })
             <ul class="app-navbar-nav">
                 <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                <li>@Html.ActionLink("Books", "Index", "Book")</li>
             </ul>
             <ul class="app-navbar-nav app-navbar-right">
                 <li class="app-navbar-text">Hello, @User.Identity.Name</li>

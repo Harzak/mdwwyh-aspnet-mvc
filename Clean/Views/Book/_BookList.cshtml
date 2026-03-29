@@ -1,0 +1,18 @@
+@model System.Collections.Generic.List<Clean.Models.BookListItemViewModel>
+
+@if (Model.Count == 0)
+{
+    <div class="book-list-empty">No books found.</div>
+}
+else
+{
+    <ul class="book-list">
+        @foreach (Clean.Models.BookListItemViewModel book in Model)
+        {
+            <li class="book-list-item" data-book-id="@book.Id">
+                <span class="book-list-title">@book.Title</span>
+                <span class="book-list-author">@book.Author</span>
+            </li>
+        }
+    </ul>
+}
