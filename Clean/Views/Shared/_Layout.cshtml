@@ -7,42 +7,27 @@
     <title>@ViewBag.Title - Clean</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Clean", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    @if (Request.IsAuthenticated)
+    <nav class="app-navbar">
+        <div class="app-navbar-inner">
+            @Html.ActionLink("Clean", "Index", "Home", new { area = "" }, new { @class = "app-navbar-brand" })
+            <ul class="app-navbar-nav">
+                <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            </ul>
+            <ul class="app-navbar-nav app-navbar-right">
+                <li class="app-navbar-text">Hello, @User.Identity.Name</li>
+                <li>
+                    @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
                     {
-                        <li class="navbar-text">Hello, @User.Identity.Name</li>
-                        <li>
-                            @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { id = "logoutForm" }))
-                            {
-                                @Html.AntiForgeryToken()
-                                <button type="submit" class="btn btn-link navbar-btn">Logout</button>
-                            }
-                        </li>
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="app-navbar-logout">Logout</button>
                     }
-                    else
-                    {
-                        <li>@Html.ActionLink("Login", "Login", "Account")</li>
-                    }
-                </ul>
-            </div>
+                </li>
+            </ul>
         </div>
-    </div>
+    </nav>
 
     <div class="container body-content">
         @RenderBody()

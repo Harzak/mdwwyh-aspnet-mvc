@@ -69,6 +69,7 @@
     <Compile Include="Constants\RouteConstants.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\GuestLayoutAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -79,6 +80,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\login.css" />
+    <Content Include="Content\site.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -87,11 +90,9 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Content\site.css" />
     <Content Include="Scripts\.gitkeep" />
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +119,12 @@
     <PackageReference Include="Modernizr">
       <Version>2.8.3</Version>
     </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_LayoutGuest.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\Login.cshtml" />

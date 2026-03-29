@@ -1,4 +1,5 @@
 using System.Web.Mvc;
+using Clean.Filters;
 
 namespace Clean.App_Start
 {
@@ -7,6 +8,7 @@ namespace Clean.App_Start
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
+            filters.Add(new GuestLayoutAttribute());
         }
     }
 }
