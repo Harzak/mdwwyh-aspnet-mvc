@@ -5,9 +5,9 @@ using System.Linq;
 using Common.Database;
 using Common.Database.Entities;
 
-namespace Clean.Repositories
+namespace Common.Repository
 {
-    internal sealed class BookRepository : IBookRepository
+    public sealed class BookRepository : IBookRepository
     {
         private readonly LibraryDbContext _context;
         private bool _disposed;

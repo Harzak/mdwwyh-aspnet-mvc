@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 using Clean.Models;
-using Clean.Repositories;
+using Common.Repository;
 using Clean.Services;
 using Common.Database;
 

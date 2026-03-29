@@ -1,8 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Common.Database.Entities;
 
-namespace Clean.Repositories
+namespace Common.Repository
 {
     public interface IBookRepository : IDisposable
     {

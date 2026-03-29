@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Clean.Models;
-using Clean.Repositories;
+using Common.Repository;
 using Common.Database.Entities;
 
 namespace Clean.Services
