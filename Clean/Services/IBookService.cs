@@ -1,27 +1,26 @@
 using System;
 using System.Collections.Generic;
-using Clean.Models;
+using Clean.Domain;
+using Common.Database.Entities;
 
 namespace Clean.Services
 {
     public interface IBookService : IDisposable
     {
-        List<BookListItemViewModel> GetAllBooks();
+        List<Book> GetAllBooks();
 
-        List<BookListItemViewModel> SearchBooks(string searchTerm);
+        List<Book> SearchBooks(string searchTerm);
 
-        BookDetailViewModel GetBookDetail(int id);
+        Book GetBookById(int id);
 
-        BookFormViewModel GetBookFormForCreate();
+        List<Library> GetAllLibraries();
 
-        BookFormViewModel GetBookFormForEdit(int id);
+        LibraryStatistics GetLibraryStatistics();
 
-        int CreateBook(BookFormViewModel model);
+        int CreateBook(Book book);
 
-        void UpdateBook(BookFormViewModel model);
+        void UpdateBook(Book book);
 
         void DeleteBook(int id);
-
-        LibrarySummaryViewModel GetLibrarySummary();
     }
 }

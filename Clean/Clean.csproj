@@ -64,6 +64,8 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assemblers\BookAssembler.cs" />
+    <Compile Include="Assemblers\IBookAssembler.cs" />
     <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -76,6 +78,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Domain\LibraryStatistics.cs" />
     <Compile Include="Models\BookDetailViewModel.cs" />
     <Compile Include="Models\BookFormViewModel.cs" />
     <Compile Include="Models\BookIndexViewModel.cs" />

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Clean.Models;
-using Common.Repository;
+using Clean.Domain;
 using Common.Database.Entities;
+using Common.Repository;
 
 namespace Clean.Services
 {
@@ -17,106 +16,53 @@ namespace Clean.Services
             _bookRepository = bookRepository ?? throw new ArgumentNullException(nameof(bookRepository));
         }
 
-        public List<BookListItemViewModel> GetAllBooks()
+        public List<Book> GetAllBooks()
         {
-            List<Book> books = _bookRepository.GetAll();
-            return books.Select(MapToListItem).ToList();
+            return _bookRepository.GetAll();
         }
 
-        public List<BookListItemViewModel> SearchBooks(string searchTerm)
+        public List<Book> SearchBooks(string searchTerm)
         {
-            List<Book> books = _bookRepository.Search(searchTerm);
-            return books.Select(MapToListItem).ToList();
+            return _bookRepository.Search(searchTerm);
         }
 
-        public BookDetailViewModel GetBookDetail(int id)
+        public Book GetBookById(int id)
         {
-            Book book = _bookRepository.GetById(id);
+            return _bookRepository.GetById(id);
+        }
+
+        public List<Library> GetAllLibraries()
+        {
+            return _bookRepository.GetAllLibraries();
+        }
+
+        public LibraryStatistics GetLibraryStatistics()
+        {
+            return new LibraryStatistics(
+                _bookRepository.CountBooks(),
+                _bookRepository.CountLibraries(),
+                _bookRepository.CountDistinctAuthors(),
+                _bookRepository.CountDistinctGenres()
+            );
+        }
+
+        public int CreateBook(Book book)
+        {
             if (book == null)
             {
-                return null;
+                throw new ArgumentNullException(nameof(book));
             }
-
-            return new BookDetailViewModel
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Author = book.Author,
-                Isbn = book.Isbn,
-                Genre = book.Genre,
-                PublishedYear = book.PublishedYear,
-                LibraryName = book.Library != null ? book.Library.Name : string.Empty
-            };
-        }
-
-        public BookFormViewModel GetBookFormForCreate()
-        {
-            BookFormViewModel model = new BookFormViewModel();
-            this.PopulateLibraries(model);
-            return model;
-        }
-
-        public BookFormViewModel GetBookFormForEdit(int id)
-        {
-            Book book = _bookRepository.GetById(id);
-            if (book == null)
-            {
-                return null;
-            }
-
-            BookFormViewModel model = new BookFormViewModel
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Author = book.Author,
-                Isbn = book.Isbn,
-                Genre = book.Genre,
-                PublishedYear = book.PublishedYear,
-                LibraryId = book.LibraryId
-            };
-
-            this.PopulateLibraries(model);
-            return model;
-        }
-
-        public int CreateBook(BookFormViewModel model)
-        {
-            if (model == null)
-            {
-                throw new ArgumentNullException(nameof(model));
-            }
-
-            Book book = new Book
-            {
-                Title = model.Title,
-                Author = model.Author,
-                Isbn = model.Isbn,
-                Genre = model.Genre,
-                PublishedYear = model.PublishedYear,
-                LibraryId = model.LibraryId
-            };
 
             _bookRepository.Add(book);
             return book.Id;
         }
 
-        public void UpdateBook(BookFormViewModel model)
+        public void UpdateBook(Book book)
         {
-            if (model == null)
+            if (book == null)
             {
-                throw new ArgumentNullException(nameof(model));
+                throw new ArgumentNullException(nameof(book));
             }
-
-            Book book = new Book
-            {
-                Id = model.Id,
-                Title = model.Title,
-                Author = model.Author,
-                Isbn = model.Isbn,
-                Genre = model.Genre,
-                PublishedYear = model.PublishedYear,
-                LibraryId = model.LibraryId
-            };
 
             _bookRepository.Update(book);
         }
@@ -124,17 +70,6 @@ namespace Clean.Services
         public void DeleteBook(int id)
         {
             _bookRepository.Delete(id);
-        }
-
-        public LibrarySummaryViewModel GetLibrarySummary()
-        {
-            return new LibrarySummaryViewModel
-            {
-                TotalBooks = _bookRepository.CountBooks(),
-                TotalLibraries = _bookRepository.CountLibraries(),
-                TotalAuthors = _bookRepository.CountDistinctAuthors(),
-                TotalGenres = _bookRepository.CountDistinctGenres()
-            };
         }
 
         public void Dispose()
@@ -154,26 +89,6 @@ namespace Clean.Services
 
                 _disposed = true;
             }
-        }
-
-        private void PopulateLibraries(BookFormViewModel model)
-        {
-            List<Library> libraries = _bookRepository.GetAllLibraries();
-            model.AvailableLibraries = libraries.Select(l => new LibrarySelectItemViewModel
-            {
-                Id = l.Id,
-                Name = l.Name
-            }).ToList();
-        }
-
-        private static BookListItemViewModel MapToListItem(Book book)
-        {
-            return new BookListItemViewModel
-            {
-                Id = book.Id,
-                Title = book.Title,
-                Author = book.Author
-            };
         }
     }
 }

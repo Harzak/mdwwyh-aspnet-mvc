@@ -1,5 +1,6 @@
 using Autofac;
 using Autofac.Integration.Mvc;
+using Clean.Assemblers;
 using Clean.Services;
 using Common.Database;
 using Common.Repository;
@@ -25,6 +26,10 @@ namespace Clean.App_Start
 
             builder.RegisterType<BookService>()
                    .As<IBookService>()
+                   .InstancePerRequest();
+
+            builder.RegisterType<BookAssembler>()
+                   .As<IBookAssembler>()
                    .InstancePerRequest();
 
             builder.RegisterType<InMemoryAuthenticationService>()

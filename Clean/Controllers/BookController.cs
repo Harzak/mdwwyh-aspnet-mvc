@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using Clean.Assemblers;
+using Clean.Domain;
 using Clean.Models;
 using Clean.Services;
+using Common.Database.Entities;
 
 namespace Clean.Controllers
 {
@@ -10,19 +13,24 @@ namespace Clean.Controllers
     public sealed class BookController : Controller
     {
         private readonly IBookService _bookService;
+        private readonly IBookAssembler _bookAssembler;
 
-        public BookController(IBookService bookService)
+        public BookController(IBookService bookService, IBookAssembler bookAssembler)
         {
             _bookService = bookService ?? throw new ArgumentNullException(nameof(bookService));
+            _bookAssembler = bookAssembler ?? throw new ArgumentNullException(nameof(bookAssembler));
         }
 
         [HttpGet]
         public ActionResult Index()
         {
+            List<Book> books = _bookService.GetAllBooks();
+            LibraryStatistics statistics = _bookService.GetLibraryStatistics();
+
             BookIndexViewModel model = new BookIndexViewModel
             {
-                Books = _bookService.GetAllBooks(),
-                Summary = _bookService.GetLibrarySummary()
+                Books = _bookAssembler.ToListItems(books),
+                Summary = _bookAssembler.ToSummary(statistics)
             };
 
             return this.View(model);
@@ -31,33 +39,37 @@ namespace Clean.Controllers
         [HttpGet]
         public ActionResult Search(string term)
         {
-            List<BookListItemViewModel> books = _bookService.SearchBooks(term);
-            return this.PartialView("_BookList", books);
+            List<Book> books = _bookService.SearchBooks(term);
+            List<BookListItemViewModel> listItems = _bookAssembler.ToListItems(books);
+            return this.PartialView("_BookList", listItems);
         }
 
         [HttpGet]
         public ActionResult Detail(int id)
         {
-            BookDetailViewModel model = _bookService.GetBookDetail(id);
-            if (model == null)
+            Book book = _bookService.GetBookById(id);
+            if (book == null)
             {
                 return this.HttpNotFound();
             }
 
+            BookDetailViewModel model = _bookAssembler.ToDetail(book);
             return this.PartialView("_BookDetail", model);
         }
 
         [HttpGet]
         public ActionResult Summary()
         {
-            LibrarySummaryViewModel model = _bookService.GetLibrarySummary();
+            LibraryStatistics statistics = _bookService.GetLibraryStatistics();
+            LibrarySummaryViewModel model = _bookAssembler.ToSummary(statistics);
             return this.PartialView("_LibrarySummary", model);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            BookFormViewModel model = _bookService.GetBookFormForCreate();
+            List<Library> libraries = _bookService.GetAllLibraries();
+            BookFormViewModel model = _bookAssembler.ToFormForCreate(libraries);
             return this.PartialView("_BookForm", model);
         }
 
@@ -67,29 +79,27 @@ namespace Clean.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                BookFormViewModel refreshedModel = _bookService.GetBookFormForCreate();
-                refreshedModel.Title = model.Title;
-                refreshedModel.Author = model.Author;
-                refreshedModel.Isbn = model.Isbn;
-                refreshedModel.Genre = model.Genre;
-                refreshedModel.PublishedYear = model.PublishedYear;
-                refreshedModel.LibraryId = model.LibraryId;
-                return this.PartialView("_BookForm", refreshedModel);
+                List<Library> libraries = _bookService.GetAllLibraries();
+                model.AvailableLibraries = _bookAssembler.ToLibrarySelectItems(libraries);
+                return this.PartialView("_BookForm", model);
             }
 
-            int bookId = _bookService.CreateBook(model);
+            Book book = _bookAssembler.ToDomain(model);
+            int bookId = _bookService.CreateBook(book);
             return this.Json(new { success = true, bookId });
         }
 
         [HttpGet]
         public ActionResult Edit(int id)
         {
-            BookFormViewModel model = _bookService.GetBookFormForEdit(id);
-            if (model == null)
+            Book book = _bookService.GetBookById(id);
+            if (book == null)
             {
                 return this.HttpNotFound();
             }
 
+            List<Library> libraries = _bookService.GetAllLibraries();
+            BookFormViewModel model = _bookAssembler.ToFormForEdit(book, libraries);
             return this.PartialView("_BookForm", model);
         }
 
@@ -99,22 +109,13 @@ namespace Clean.Controllers
         {
             if (!this.ModelState.IsValid)
             {
-                BookFormViewModel refreshedModel = _bookService.GetBookFormForEdit(model.Id);
-                if (refreshedModel == null)
-                {
-                    return this.HttpNotFound();
-                }
-
-                refreshedModel.Title = model.Title;
-                refreshedModel.Author = model.Author;
-                refreshedModel.Isbn = model.Isbn;
-                refreshedModel.Genre = model.Genre;
-                refreshedModel.PublishedYear = model.PublishedYear;
-                refreshedModel.LibraryId = model.LibraryId;
-                return this.PartialView("_BookForm", refreshedModel);
+                List<Library> libraries = _bookService.GetAllLibraries();
+                model.AvailableLibraries = _bookAssembler.ToLibrarySelectItems(libraries);
+                return this.PartialView("_BookForm", model);
             }
 
-            _bookService.UpdateBook(model);
+            Book book = _bookAssembler.ToDomain(model);
+            _bookService.UpdateBook(book);
             return this.Json(new { success = true, bookId = model.Id });
         }
 
